@@ -32,6 +32,12 @@ self.addEventListener("activate", (event) => {
 
 // Serve from Cache
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+
+  if (event.request.destination === "video" || url.pathname.endsWith(".mp4")) {
+    return;
+  }
+
   event.respondWith(
     caches
       .match(event.request)
